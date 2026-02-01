@@ -15,11 +15,11 @@ body{
 .card{
   background:#fff;
   padding:20px;
-  width:320px;
+  width:360px;
   border-radius:10px;
   box-shadow:0 4px 10px rgba(0,0,0,.1);
 }
-input, textarea, button{
+input, select, button{
   width:100%;
   padding:10px;
   margin-top:10px;
@@ -41,22 +41,75 @@ button:hover{
   <h3>Kehadiran Bilik Kaunseling</h3>
 
   <input id="nama" placeholder="Nama">
-  <input id="kelas" placeholder="Kelas">
-  <textarea id="tujuan" placeholder="Tujuan"></textarea>
+
+  <select id="tingkatan" onchange="updateKelas()">
+    <option value="">-- Pilih Tingkatan --</option>
+    <option value="1">Tingkatan 1</option>
+    <option value="2">Tingkatan 2</option>
+    <option value="3">Tingkatan 3</option>
+    <option value="4">Tingkatan 4</option>
+    <option value="5">Tingkatan 5</option>
+  </select>
+
+  <select id="kelas">
+    <option value="">-- Pilih Kelas --</option>
+  </select>
+
+  <select id="tujuan">
+    <option value="">-- Pilih Tujuan --</option>
+    <option value="Kaunseling Akademik">Kaunseling Akademik</option>
+    <option value="Kaunseling Peribadi">Kaunseling Peribadi</option>
+    <option value="Isu Sosial">Isu Sosial</option>
+    <option value="Lain-lain">Lain-lain</option>
+  </select>
 
   <button onclick="hantar()">Hantar</button>
   <p id="msg"></p>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxIMKeO3IzrSSRfT1jgpam2JQiVbLVX_93sagio60n_XrJ-cJe-vrR6LMwsXZhpamVmqA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbz8ar0KbKFY6Mn13HNh_utfqCrk5ia8tekPcVh6Q6SUZMEF9PNANW4AezkHqSp2YEXLrA/exec"; // Ganti dengan URL Apps Script
 
+// Data kelas ikut tingkatan
+const kelasData = {
+  "1": ["Seroja","Mawar","Jasmin","Kemboja","Bakawali","Dahlia"],
+  "2": ["Seroja","Mawar","Jasmin","Kemboja","Bakawali","Dahlia"],
+  "3": ["Seroja","Mawar","Jasmin","Kemboja","Bakawali","Dahlia"],
+  "4": ["Sains Akaun","Stem C","Kemanusiaan 1","Kemanusiaan 2","Kemanusiaan 3","Kemanusiaan 4"],
+  "5": ["Sains Akaun","Stem C","Kemanusiaan 1","Kemanusiaan 2","Kemanusiaan 3","Kemanusiaan 4"]
+};
+
+// Update kelas bila tingkatan dipilih
+function updateKelas(){
+  const tingkatan = document.getElementById("tingkatan").value;
+  const kelasSelect = document.getElementById("kelas");
+
+  // kosongkan kelas
+  kelasSelect.innerHTML = "<option value=''>-- Pilih Kelas --</option>";
+
+  if(tingkatan && kelasData[tingkatan]){
+    kelasData[tingkatan].forEach(k=>{
+      const opt = document.createElement("option");
+      opt.value = k;
+      opt.text = k;
+      kelasSelect.add(opt);
+    });
+  }
+}
+
+// Submit borang
 function hantar(){
   const data = {
-    nama: nama.value,
-    kelas: kelas.value,
-    tujuan: tujuan.value
+    nama: document.getElementById("nama").value,
+    tingkatan: document.getElementById("tingkatan").value,
+    kelas: document.getElementById("kelas").value,
+    tujuan: document.getElementById("tujuan").value
   };
+
+  if(!data.nama || !data.tingkatan || !data.kelas || !data.tujuan){
+    document.getElementById("msg").innerText = "Sila lengkapkan semua medan.";
+    return;
+  }
 
   fetch(API_URL,{
     method:"POST",
@@ -64,11 +117,14 @@ function hantar(){
   })
   .then(r=>r.json())
   .then(res=>{
-    msg.innerText = "Kehadiran berjaya direkod.";
-    nama.value = kelas.value = tujuan.value = "";
+    document.getElementById("msg").innerText = "Kehadiran berjaya direkod.";
+    document.getElementById("nama").value = "";
+    document.getElementById("tingkatan").value = "";
+    document.getElementById("kelas").innerHTML = "<option value=''>-- Pilih Kelas --</option>";
+    document.getElementById("tujuan").value = "";
   })
   .catch(()=>{
-    msg.innerText = "Ralat. Cuba lagi.";
+    document.getElementById("msg").innerText = "Ralat. Cuba lagi.";
   });
 }
 </script>
