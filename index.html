@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<title>Kehadiran Bilik Kaunseling</title>
+<title>Kehadiran Ke Bilik Kaunseling</title>
 <style>
 body{
   font-family: Arial, sans-serif;
@@ -11,6 +11,7 @@ body{
   justify-content:center;
   align-items:center;
   height:100vh;
+  margin:0;
 }
 .card{
   background:#fff;
@@ -31,6 +32,38 @@ button{
   cursor:pointer;
 }
 button:hover{
+  opacity:.9;
+}
+
+/* Modal Style */
+#popup{
+  display:none;
+  position:fixed;
+  z-index:999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+}
+#popup-content{
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  width:300px;
+  max-width:90%;
+  margin:15% auto;
+  text-align:center;
+}
+#popup-content button{
+  margin-top:15px;
+  background:#2c7be5;
+  color:#fff;
+  border:none;
+  padding:10px 20px;
+  cursor:pointer;
+}
+#popup-content button:hover{
   opacity:.9;
 }
 </style>
@@ -64,11 +97,18 @@ button:hover{
   </select>
 
   <button onclick="hantar()">Hantar</button>
-  <p id="msg"></p>
+</div>
+
+<!-- Modal Popup -->
+<div id="popup">
+  <div id="popup-content">
+    <p id="popup-msg"></p>
+    <button onclick="closePopup()">OK</button>
+  </div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbz8ar0KbKFY6Mn13HNh_utfqCrk5ia8tekPcVh6Q6SUZMEF9PNANW4AezkHqSp2YEXLrA/exec"; // Ganti dengan URL Apps Script
+const API_URL = "https://script.google.com/macros/s/AKfycbz8ar0KbKFY6Mn13HNh_utfqCrk5ia8tekPcVh6Q6SUZMEF9PNANW4AezkHqSp2YEXLrA/exec";
 
 // Data kelas ikut tingkatan
 const kelasData = {
@@ -84,7 +124,6 @@ function updateKelas(){
   const tingkatan = document.getElementById("tingkatan").value;
   const kelasSelect = document.getElementById("kelas");
 
-  // kosongkan kelas
   kelasSelect.innerHTML = "<option value=''>-- Pilih Kelas --</option>";
 
   if(tingkatan && kelasData[tingkatan]){
@@ -97,6 +136,15 @@ function updateKelas(){
   }
 }
 
+// Popup functions
+function showPopup(msg){
+  document.getElementById("popup-msg").innerText = msg;
+  document.getElementById("popup").style.display = "block";
+}
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
+}
+
 // Submit borang
 function hantar(){
   const data = {
@@ -107,7 +155,7 @@ function hantar(){
   };
 
   if(!data.nama || !data.tingkatan || !data.kelas || !data.tujuan){
-    document.getElementById("msg").innerText = "Sila lengkapkan semua medan.";
+    showPopup("Sila lengkapkan semua medan.");
     return;
   }
 
@@ -117,14 +165,15 @@ function hantar(){
   })
   .then(r=>r.json())
   .then(res=>{
-    document.getElementById("msg").innerText = "Kehadiran berjaya direkod.";
+    showPopup("Kehadiran berjaya direkod.");
+    // kosongkan borang
     document.getElementById("nama").value = "";
     document.getElementById("tingkatan").value = "";
     document.getElementById("kelas").innerHTML = "<option value=''>-- Pilih Kelas --</option>";
     document.getElementById("tujuan").value = "";
   })
   .catch(()=>{
-    document.getElementById("msg").innerText = "Ralat. Cuba lagi.";
+    showPopup("Ralat. Cuba lagi.");
   });
 }
 </script>
