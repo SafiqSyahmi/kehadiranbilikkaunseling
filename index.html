@@ -4,46 +4,98 @@
 <meta charset="UTF-8">
 <title>Kehadiran Ke Bilik Kaunseling</title>
 <style>
+/* Header Fixed */
+header{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:90px;
+  background:#0984e3;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index:1000;
+}
+
+/* Logo & Title */
+header img{
+  height:40px;
+  margin-right:15px;
+}
+header h1{
+  font-size:20px;
+  color:#fff;
+  margin:0;
+}
+
+/* Body & Page */
 body{
   font-family: Arial, sans-serif;
-  background:#f4f6f8;
+  background: linear-gradient(135deg,#74b9ff,#a29bfe);
   display:flex;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start; /* supaya card di bawah header */
+  padding-top:80px; /* jarak untuk header */
   height:100vh;
   margin:0;
 }
+
+/* Card */
 .card{
   background:#fff;
-  padding:20px;
-  width:360px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-}
-select, button{
-  width:100%;
-  padding: 10px;
-  margin-top:10px;
-}
-input{
-  width:93%;
-  padding: 10px;
-  margin-top:10px;
-}
-button{
-  background:#2c7be5;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-button:hover{
-  opacity:.9;
-}
-h3{
+  padding:25px 30px;
+  width:400px;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
   text-align:center;
 }
 
-/* Modal Style */
+/* Input & Select */
+input{
+  width:93%;
+  padding:12px;
+  margin-top:12px;
+  border:1px solid #dfe6e9;
+  border-radius:8px;
+  font-size:15px;
+  transition:0.3s;
+}
+select{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:1px solid #dfe6e9;
+  border-radius:8px;
+  font-size:15px;
+  transition:0.3s;
+}
+input:focus, select:focus{
+  outline:none;
+  border-color:#0984e3;
+  box-shadow:0 0 5px rgba(9,132,227,0.5);
+}
+
+/* Button */
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:8px;
+  background:#0984e3;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover{
+  background:#74b9ff;
+  color:#2d3436;
+}
+
+/* Modal Popup */
 #popup{
   display:none;
   position:fixed;
@@ -52,36 +104,43 @@ h3{
   top:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.5);
+  background:rgba(0,0,0,0.6);
 }
 #popup-content{
   background:#fff;
-  padding:20px;
-  border-radius:10px;
-  width:300px;
+  padding:25px;
+  border-radius:12px;
+  width:320px;
   max-width:90%;
   margin:15% auto;
   text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
 }
 #popup-content button{
   margin-top:15px;
-  background:#2c7be5;
+  background:#0984e3;
   color:#fff;
   border:none;
   padding:10px 20px;
+  border-radius:8px;
   cursor:pointer;
 }
 #popup-content button:hover{
-  opacity:.9;
+  background:#74b9ff;
+  color:#2d3436;
 }
 
 </style>
 </head>
 <body>
 
-<div class="card">
-  <h3>Kehadiran Ke Bilik Kaunseling</h3>
+<!-- Fixed Header -->
+<header>
+  <img src="https://drive.google.com/uc?export=view&id=1WFDpaw42kvWAhSdckkId1dOQe1UWYduZ" alt="Logo">
+  <h1>Kehadiran Bilik Kaunseling</h1>
+</header>
 
+<div class="card">
   <input id="nama" placeholder="Nama">
 
   <select id="tingkatan" onchange="updateKelas()">
@@ -124,17 +183,15 @@ const kelasData = {
   "1": ["1 Seroja","1 Mawar","1 Jasmin","1 Kemboja","1 Bakawali","1 Dahlia"],
   "2": ["2 Seroja","2 Mawar","2 Jasmin","2 Kemboja","2 Bakawali","2 Dahlia"],
   "3": ["3 Seroja","3 Mawar","3 Jasmin","3 Kemboja","3 Bakawali","3 Dahlia"],
-  "4": ["4 Sains Akaun","4 Stem C"," 4 Kemanusiaan 1","4 Kemanusiaan 2","4 Kemanusiaan 3","4 Kemanusiaan 4"],
+  "4": ["4 Sains Akaun","4 Stem C","4 Kemanusiaan 1","4 Kemanusiaan 2","4 Kemanusiaan 3","4 Kemanusiaan 4"],
   "5": ["5 Sains Akaun","5 Stem C","5 Kemanusiaan 1","5 Kemanusiaan 2","5 Kemanusiaan 3","5 Kemanusiaan 4"]
 };
 
-// Update kelas bila tingkatan dipilih
 function updateKelas(){
   const tingkatan = document.getElementById("tingkatan").value;
   const kelasSelect = document.getElementById("kelas");
 
   kelasSelect.innerHTML = "<option value=''>-- Pilih Kelas --</option>";
-
   if(tingkatan && kelasData[tingkatan]){
     kelasData[tingkatan].forEach(k=>{
       const opt = document.createElement("option");
@@ -175,7 +232,6 @@ function hantar(){
   .then(r=>r.json())
   .then(res=>{
     showPopup("Kehadiran berjaya direkod.");
-    // kosongkan borang
     document.getElementById("nama").value = "";
     document.getElementById("tingkatan").value = "";
     document.getElementById("kelas").innerHTML = "<option value=''>-- Pilih Kelas --</option>";
