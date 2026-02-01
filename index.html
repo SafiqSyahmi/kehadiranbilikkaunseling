@@ -232,4 +232,16 @@ function hantar(){
     body: JSON.stringify(data)
   })
   .then(r=>r.json())
-  .then(res=>{
+  .then(res => {
+    showPopup("Kehadiran berjaya direkod.");
+    // Kosongkan borang selepas berjaya hantar
+    document.getElementById("nama").value = "";
+    document.getElementById("tingkatan").value = "";
+    document.getElementById("kelas").innerHTML = "<option value=''>-- Pilih Kelas --</option>";
+    document.getElementById("tujuan").value = "";
+  })
+  .catch(err => {
+    console.error(err); // untuk debug
+    showPopup("Ralat semasa menghantar. Sila cuba lagi.");
+  });
+}
