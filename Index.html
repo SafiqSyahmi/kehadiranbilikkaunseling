@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>Kehadiran Bilik Kaunseling</title>
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f6f8;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.card{
+  background:#fff;
+  padding:20px;
+  width:320px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+input, textarea, button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+}
+button{
+  background:#2c7be5;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+button:hover{
+  opacity:.9;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h3>Kehadiran Bilik Kaunseling</h3>
+
+  <input id="nama" placeholder="Nama">
+  <input id="kelas" placeholder="Kelas">
+  <textarea id="tujuan" placeholder="Tujuan"></textarea>
+
+  <button onclick="hantar()">Hantar</button>
+  <p id="msg"></p>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxIMKeO3IzrSSRfT1jgpam2JQiVbLVX_93sagio60n_XrJ-cJe-vrR6LMwsXZhpamVmqA/exec";
+
+function hantar(){
+  const data = {
+    nama: nama.value,
+    kelas: kelas.value,
+    tujuan: tujuan.value
+  };
+
+  fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify(data)
+  })
+  .then(r=>r.json())
+  .then(res=>{
+    msg.innerText = "Kehadiran berjaya direkod.";
+    nama.value = kelas.value = tujuan.value = "";
+  })
+  .catch(()=>{
+    msg.innerText = "Ralat. Cuba lagi.";
+  });
+}
+</script>
+
+</body>
+</html>
