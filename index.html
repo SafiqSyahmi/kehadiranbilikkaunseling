@@ -4,58 +4,70 @@
 <meta charset="UTF-8">
 <title>Kehadiran Ke Bilik Kaunseling</title>
 <style>
+/* Reset margin/padding */
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* Body & Layout */
+body{
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#da8ee7,#be2ed6);
+  display:flex;
+  flex-direction:column;
+  height:100vh; /* 100% viewport */
+  overflow:hidden; /* hilangkan scroll */
+}
+
 /* Header Fixed */
 header{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
   height:90px;
-  background:#0984e3;
+  background:#b100cd;
   display:flex;
   align-items:center;
   padding:0 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   z-index:1000;
+  flex-shrink:0;
 }
 
 /* Logo & Title */
 header img{
-  height:80px;
+  height:70px;
   margin-right:15px;
 }
 
-/* Body & Page */
-body{
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg,#74b9ff,#a29bfe);
+/* Main content: card centered */
+main{
+  flex:1;
   display:flex;
   justify-content:center;
-  align-items:flex-start; /* supaya card di bawah header */
-  padding-top:80px; /* jarak untuk header */
-  height:100vh;
-  margin:0;
+  align-items:center;
+  padding:10px;
 }
 
 /* Card */
 .card{
   background:#fff;
-  padding:25px 30px;
-  width:400px;
+  padding:20px 25px;
+  width:360px;
   border-radius:15px;
   box-shadow:0 8px 20px rgba(0,0,0,0.2);
   text-align:center;
+  overflow-y:auto; /* kalau card penuh, scroll dalam card */
+  max-height: calc(100vh - 110px); /* tinggi maksimum card ikut viewport - header */
 }
 
 /* Input & Select */
 input{
-  width:93%;
+  width:90%;
   padding:12px;
   margin-top:12px;
   border:1px solid #dfe6e9;
   border-radius:8px;
   font-size:15px;
-  transition:0.3s;
 }
 select{
   width:100%;
@@ -64,12 +76,6 @@ select{
   border:1px solid #dfe6e9;
   border-radius:8px;
   font-size:15px;
-  transition:0.3s;
-}
-input:focus, select:focus{
-  outline:none;
-  border-color:#0984e3;
-  box-shadow:0 0 5px rgba(9,132,227,0.5);
 }
 
 /* Button */
@@ -83,11 +89,15 @@ button{
   color:#fff;
   font-size:16px;
   cursor:pointer;
-  transition:0.3s;
 }
 button:hover{
   background:#74b9ff;
   color:#2d3436;
+}
+
+h3{
+  text-align:center;
+  margin-top: 10px;
 }
 
 /* Modal Popup */
@@ -124,42 +134,43 @@ button:hover{
   background:#74b9ff;
   color:#2d3436;
 }
-
 </style>
 </head>
 <body>
 
-<!-- Fixed Header -->
 <header>
   <img src="UBK.png" alt="Logo">
 </header>
 
-<div class="card">
-  <input id="nama" placeholder="Nama">
+<main>
+  <div class="card">
+    <h3>Kehadiran Ke Bilik Bimbingan & Kaunseling</h3>
+    <input id="nama" placeholder="Nama">
 
-  <select id="tingkatan" onchange="updateKelas()">
-    <option value="">-- Pilih Tingkatan --</option>
-    <option value="1">Tingkatan 1</option>
-    <option value="2">Tingkatan 2</option>
-    <option value="3">Tingkatan 3</option>
-    <option value="4">Tingkatan 4</option>
-    <option value="5">Tingkatan 5</option>
-  </select>
+    <select id="tingkatan" onchange="updateKelas()">
+      <option value="">-- Pilih Tingkatan --</option>
+      <option value="1">Tingkatan 1</option>
+      <option value="2">Tingkatan 2</option>
+      <option value="3">Tingkatan 3</option>
+      <option value="4">Tingkatan 4</option>
+      <option value="5">Tingkatan 5</option>
+    </select>
 
-  <select id="kelas">
-    <option value="">-- Pilih Kelas --</option>
-  </select>
+    <select id="kelas">
+      <option value="">-- Pilih Kelas --</option>
+    </select>
 
-  <select id="tujuan">
-    <option value="">-- Pilih Tujuan --</option>
-    <option value="Kaunseling Akademik">Kaunseling Akademik</option>
-    <option value="Kaunseling Peribadi">Kaunseling Peribadi</option>
-    <option value="Isu Sosial">Isu Sosial</option>
-    <option value="Lain-lain">Lain-lain</option>
-  </select>
+    <select id="tujuan">
+      <option value="">-- Pilih Tujuan --</option>
+      <option value="Kaunseling Akademik">Kaunseling Akademik</option>
+      <option value="Kaunseling Peribadi">Kaunseling Peribadi</option>
+      <option value="Isu Sosial">Isu Sosial</option>
+      <option value="Lain-lain">Lain-lain</option>
+    </select>
 
-  <button onclick="hantar()">Hantar</button>
-</div>
+    <button onclick="hantar()">Hantar</button>
+  </div>
+</main>
 
 <!-- Modal Popup -->
 <div id="popup">
@@ -172,7 +183,6 @@ button:hover{
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbxlngo1Kx-SyBjZ-ZNsE9fvFFXmTHog0nOidghq7hQim_ZZTw4Vac860oIgOYXiUftw3Q/exec";
 
-// Data kelas ikut tingkatan
 const kelasData = {
   "1": ["1 Seroja","1 Mawar","1 Jasmin","1 Kemboja","1 Bakawali","1 Dahlia"],
   "2": ["2 Seroja","2 Mawar","2 Jasmin","2 Kemboja","2 Bakawali","2 Dahlia"],
@@ -196,7 +206,6 @@ function updateKelas(){
   }
 }
 
-// Popup functions
 function showPopup(msg){
   document.getElementById("popup-msg").innerText = msg;
   document.getElementById("popup").style.display = "block";
@@ -205,7 +214,6 @@ function closePopup(){
   document.getElementById("popup").style.display = "none";
 }
 
-// Submit borang
 function hantar(){
   const data = {
     nama: document.getElementById("nama").value,
@@ -225,17 +233,3 @@ function hantar(){
   })
   .then(r=>r.json())
   .then(res=>{
-    showPopup("Kehadiran berjaya direkod.");
-    document.getElementById("nama").value = "";
-    document.getElementById("tingkatan").value = "";
-    document.getElementById("kelas").innerHTML = "<option value=''>-- Pilih Kelas --</option>";
-    document.getElementById("tujuan").value = "";
-  })
-  .catch(()=>{
-    showPopup("Ralat. Cuba lagi.");
-  });
-}
-</script>
-
-</body>
-</html>
