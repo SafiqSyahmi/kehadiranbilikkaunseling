@@ -3,148 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <title>Kehadiran Ke Bilik Kaunseling</title>
-<style>
-/* Reset margin/padding */
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
 
-/* Body & Layout */
+<style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* BODY */
 body{
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg,#da8ee7,#be2ed6);
+  font-family:"Segoe UI", Arial, sans-serif;
+  background:linear-gradient(135deg,#f1f8ff,#e8fdf7);
+  height:100vh;
   display:flex;
   flex-direction:column;
-  height:100vh; /* 100% viewport */
-  overflow:hidden; /* hilangkan scroll */
+  overflow:hidden;
 }
 
-/* Header Fixed */
+/* HEADER – WARNA CERAH */
 header{
   height:90px;
-  background:#b100cd;
+  background:linear-gradient(135deg,#4dd0e1,#80deea);
   display:flex;
   align-items:center;
-  padding:0 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index:1000;
-  flex-shrink:0;
+  padding:0 25px;
+  box-shadow:0 4px 15px rgba(0,0,0,.25);
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:10;
 }
-
-/* Logo & Title */
 header img{
   height:70px;
-  margin-right:15px;
+}
+.header-text{
+  margin-left:15px;
+  color:#004d40;
+  line-height:1.2;
 }
 
-/* Main content: card centered */
+.header-text .title{
+  font-size:20px;
+  font-weight:700;
+}
+
+.header-text .subtitle{
+  font-size:14px;
+  opacity:.9;
+}
+
+/* MAIN */
 main{
   flex:1;
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:10px;
+  padding-top:90px;
 }
 
-/* Card */
+/* CARD */
 .card{
-  background:#fff;
-  padding:20px 25px;
+  background:#ffffff;
   width:360px;
-  border-radius:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  padding:25px;
+  border-radius:18px;
   text-align:center;
-  overflow-y:auto; /* kalau card penuh, scroll dalam card */
-  max-height: calc(100vh - 110px); /* tinggi maksimum card ikut viewport - header */
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
 }
 
-/* Input & Select */
-input{
-  width:90%;
-  padding:12px;
-  margin-top:12px;
-  border:1px solid #dfe6e9;
-  border-radius:8px;
-  font-size:15px;
+/* TITLE */
+.card h3{
+  margin-bottom:15px;
+  color:#006064;
+  font-size:18px;
 }
-select{
+
+/* INPUT */
+input,select{
   width:100%;
   padding:12px;
   margin-top:12px;
-  border:1px solid #dfe6e9;
-  border-radius:8px;
+  border-radius:10px;
+  border:1px solid #ccc;
   font-size:15px;
+  transition:.25s;
+}
+input:focus,select:focus{
+  outline:none;
+  border-color:#26c6da;
+  box-shadow:0 0 0 3px rgba(38,198,218,.25);
 }
 
-/* Button */
+/* BUTTON */
 button{
   width:100%;
-  padding:12px;
-  margin-top:15px;
+  margin-top:18px;
+  padding:13px;
   border:none;
-  border-radius:8px;
-  background:#0984e3;
-  color:#fff;
+  border-radius:12px;
   font-size:16px;
+  color:#fff;
+  background:linear-gradient(135deg,#26c6da,#00acc1);
   cursor:pointer;
+  transition:.25s;
 }
 button:hover{
-  background:#74b9ff;
-  color:#2d3436;
+  transform:translateY(-2px);
+  box-shadow:0 6px 15px rgba(0,172,193,.45);
 }
 
-h3{
-  text-align:center;
-  margin-top: 10px;
-}
-
-/* Modal Popup */
+/* POPUP */
 #popup{
   display:none;
   position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
   z-index:999;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
 }
 #popup-content{
   background:#fff;
+  width:300px;
   padding:25px;
-  border-radius:12px;
-  width:320px;
-  max-width:90%;
-  margin:15% auto;
+  border-radius:16px;
   text-align:center;
-  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  margin:20% auto;
 }
+#popup-content p{color:#333}
 #popup-content button{
   margin-top:15px;
-  background:#0984e3;
-  color:#fff;
-  border:none;
-  padding:10px 20px;
-  border-radius:8px;
-  cursor:pointer;
-}
-#popup-content button:hover{
-  background:#74b9ff;
-  color:#2d3436;
+  background:#00acc1;
 }
 </style>
 </head>
+
 <body>
 
 <header>
   <img src="UBK.png" alt="Logo">
+  <div class="header-text">
+    <div class="title">Unit Bimbingan & Kaunseling</div>
+    <div class="subtitle">Sistem Kehadiran Murid</div>
+  </div>
 </header>
 
 <main>
   <div class="card">
     <h3>Kehadiran Ke Bilik Bimbingan & Kaunseling</h3>
+
     <input id="nama" placeholder="Nama">
 
     <select id="tingkatan" onchange="updateKelas()">
@@ -172,7 +174,7 @@ h3{
   </div>
 </main>
 
-<!-- Modal Popup -->
+<!-- POPUP -->
 <div id="popup">
   <div id="popup-content">
     <p id="popup-msg"></p>
@@ -181,69 +183,38 @@ h3{
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxlngo1Kx-SyBjZ-ZNsE9fvFFXmTHog0nOidghq7hQim_ZZTw4Vac860oIgOYXiUftw3Q/exec";
+const API_URL="https://script.google.com/macros/s/AKfycbxlngo1Kx-SyBjZ-ZNsE9fvFFXmTHog0nOidghq7hQim_ZZTw4Vac860oIgOYXiUftw3Q/exec";
 
-const kelasData = {
-  "1": ["1 Seroja","1 Mawar","1 Jasmin","1 Kemboja","1 Bakawali","1 Dahlia"],
-  "2": ["2 Seroja","2 Mawar","2 Jasmin","2 Kemboja","2 Bakawali","2 Dahlia"],
-  "3": ["3 Seroja","3 Mawar","3 Jasmin","3 Kemboja","3 Bakawali","3 Dahlia"],
-  "4": ["4 Sains Akaun","4 Stem C","4 Kemanusiaan 1","4 Kemanusiaan 2","4 Kemanusiaan 3","4 Kemanusiaan 4"],
-  "5": ["5 Sains Akaun","5 Stem C","5 Kemanusiaan 1","5 Kemanusiaan 2","5 Kemanusiaan 3","5 Kemanusiaan 4"]
+const kelasData={
+  "1":["1 Seroja","1 Mawar","1 Jasmin","1 Kemboja","1 Bakawali","1 Dahlia"],
+  "2":["2 Seroja","2 Mawar","2 Jasmin","2 Kemboja","2 Bakawali","2 Dahlia"],
+  "3":["3 Seroja","3 Mawar","3 Jasmin","3 Kemboja","3 Bakawali","3 Dahlia"],
+  "4":["4 Sains Akaun","4 Stem C","4 Kemanusiaan 1","4 Kemanusiaan 2","4 Kemanusiaan 3","4 Kemanusiaan 4"],
+  "5":["5 Sains Akaun","5 Stem C","5 Kemanusiaan 1","5 Kemanusiaan 2","5 Kemanusiaan 3","5 Kemanusiaan 4"]
 };
 
 function updateKelas(){
-  const tingkatan = document.getElementById("tingkatan").value;
-  const kelasSelect = document.getElementById("kelas");
-
-  kelasSelect.innerHTML = "<option value=''>-- Pilih Kelas --</option>";
-  if(tingkatan && kelasData[tingkatan]){
-    kelasData[tingkatan].forEach(k=>{
-      const opt = document.createElement("option");
-      opt.value = k;
-      opt.text = k;
-      kelasSelect.add(opt);
-    });
-  }
+  kelas.innerHTML="<option value=''>-- Pilih Kelas --</option>";
+  (kelasData[tingkatan.value]||[]).forEach(k=>{
+    kelas.innerHTML+=`<option>${k}</option>`;
+  });
 }
 
 function showPopup(msg){
-  document.getElementById("popup-msg").innerText = msg;
-  document.getElementById("popup").style.display = "block";
+  popup.style.display="block";
+  popupMsg.innerText=msg;
 }
-function closePopup(){
-  document.getElementById("popup").style.display = "none";
-}
+function closePopup(){ popup.style.display="none"; }
 
 function hantar(){
-  const data = {
-    nama: document.getElementById("nama").value,
-    tingkatan: document.getElementById("tingkatan").value,
-    kelas: document.getElementById("kelas").value,
-    tujuan: document.getElementById("tujuan").value
-  };
-
-  if(!data.nama || !data.tingkatan || !data.kelas || !data.tujuan){
+  const data={nama:nama.value,tingkatan:tingkatan.value,kelas:kelas.value,tujuan:tujuan.value};
+  if(!data.nama||!data.tingkatan||!data.kelas||!data.tujuan){
     showPopup("Sila lengkapkan semua medan.");
     return;
   }
-
-  fetch(API_URL,{
-    method:"POST",
-    body: JSON.stringify(data)
-  })
-  .then(r=>r.json())
-  .then(res => {
-    showPopup("Kehadiran berjaya direkod.");
-    // Kosongkan borang selepas berjaya hantar
-    document.getElementById("nama").value = "";
-    document.getElementById("tingkatan").value = "";
-    document.getElementById("kelas").innerHTML = "<option value=''>-- Pilih Kelas --</option>";
-    document.getElementById("tujuan").value = "";
-  })
-  .catch(err => {
-    console.error(err); // untuk debug
-    showPopup("Ralat semasa menghantar. Sila cuba lagi.");
-  });
+  fetch(API_URL,{method:"POST",body:JSON.stringify(data)})
+  .then(()=>showPopup("Kehadiran berjaya direkod."))
+  .catch(()=>showPopup("Ralat. Cuba lagi."));
 }
 </script>
 
