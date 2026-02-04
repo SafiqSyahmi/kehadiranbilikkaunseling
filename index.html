@@ -2,51 +2,59 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kehadiran Ke Bilik Kaunseling</title>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 /* RESET */
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 /* BODY */
 body{
   font-family:"Segoe UI", Arial, sans-serif;
-  background:linear-gradient(135deg,#f1f8ff,#e8fdf7);
-  height:100vh;
+  background: linear-gradient(135deg,#f1f8ff,#e8fdf7);
+  min-height:100vh;
   display:flex;
   flex-direction:column;
-  overflow:hidden;
+  overflow-x:hidden;
 }
 
-/* HEADER – WARNA CERAH */
+/* HEADER */
 header{
-  height:90px;
-  background:linear-gradient(135deg,#4dd0e1,#80deea);
   display:flex;
+  flex-wrap:wrap;
   align-items:center;
-  padding:0 25px;
+  justify-content: space-between;
+  padding:0 20px;
+  height:90px;
+  background: linear-gradient(135deg,#4dd0e1,#80deea);
   box-shadow:0 4px 15px rgba(0,0,0,.25);
   position:fixed;
-  top:0;left:0;right:0;
+  top:0; left:0; right:0;
   z-index:10;
 }
+.header-left{
+  display:flex;
+  align-items:center;
+}
 header img{
-  height:70px;
+  height:60px;
+  margin-right:10px;
 }
 .header-text{
-  margin-left:15px;
-  color:#004d40;
   line-height:1.2;
+  color:#004d40;
 }
-
 .header-text .title{
-  font-size:20px;
+  font-size:18px;
   font-weight:700;
 }
-
 .header-text .subtitle{
-  font-size:14px;
+  font-size:13px;
   opacity:.9;
+}
+.header-right img{
+  height:60px;
 }
 
 /* MAIN */
@@ -55,37 +63,52 @@ main{
   display:flex;
   justify-content:center;
   align-items:center;
-  padding-top:90px;
+  padding:120px 10px 20px 10px; /* ruang header */
 }
 
 /* CARD */
 .card{
-  background:#ffffff;
-  width:360px;
+  background:#fff;
+  width:90%;
+  max-width:400px;
   padding:25px;
   border-radius:18px;
   text-align:center;
   box-shadow:0 12px 30px rgba(0,0,0,.22);
+  animation: fadeUp .6s ease;
 }
 
-/* TITLE */
+/* CARD TITLE */
 .card h3{
-  margin-bottom:15px;
+  margin-bottom:20px;
   color:#006064;
   font-size:18px;
 }
 
-/* INPUT */
-input,select{
-  width:100%;
-  padding:12px;
+/* FIELD WITH ICON */
+.field{
+  position:relative;
   margin-top:12px;
+}
+.field i{
+  position:absolute;
+  top:50%;
+  left:12px;
+  transform:translateY(-50%);
+  color:#00acc1;
+  font-size:16px;
+}
+.field input,
+.field select{
+  width:100%;
+  padding:12px 12px 12px 38px;
   border-radius:10px;
   border:1px solid #ccc;
   font-size:15px;
   transition:.25s;
 }
-input:focus,select:focus{
+.field input:focus,
+.field select:focus{
   outline:none;
   border-color:#26c6da;
   box-shadow:0 0 0 3px rgba(38,198,218,.25);
@@ -108,6 +131,9 @@ button:hover{
   transform:translateY(-2px);
   box-shadow:0 6px 15px rgba(0,172,193,.45);
 }
+button:active{
+  transform:scale(.98);
+}
 
 /* POPUP */
 #popup{
@@ -119,16 +145,42 @@ button:hover{
 }
 #popup-content{
   background:#fff;
-  width:300px;
+  width:90%;
+  max-width:320px;
   padding:25px;
   border-radius:16px;
   text-align:center;
   margin:20% auto;
+  animation: popupZoom .4s ease;
 }
-#popup-content p{color:#333}
+#popup-content p{color:#333;font-size:15px;}
 #popup-content button{
   margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
   background:#00acc1;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(25px);}
+  to{opacity:1; transform:translateY(0);}
+}
+@keyframes popupZoom{
+  from{opacity:0; transform:scale(.85);}
+  to{opacity:1; transform:scale(1);}
+}
+
+/* MEDIA QUERY */
+@media(max-width:480px){
+  header img{height:50px;}
+  .header-text .title{font-size:16px;}
+  .header-text .subtitle{font-size:12px;}
+  .card{padding:20px;}
+  input, select, button{font-size:14px;}
 }
 </style>
 </head>
@@ -136,39 +188,56 @@ button:hover{
 <body>
 
 <header>
-  <img src="UBK.png" alt="Logo">
-  <div class="header-text">
-    <div class="title">Unit Bimbingan & Kaunseling</div>
-    <div class="subtitle">Sistem Kehadiran Murid</div>
+  <div class="header-left">
+    <img src="UBK.png" alt="Logo Kiri">
+    <div class="header-text">
+      <div class="title">Unit Bimbingan & Kaunseling</div>
+      <div class="subtitle">Sistem Kehadiran Murid</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <img src="SMK Jerai.png" alt="Logo Kanan">
   </div>
 </header>
 
 <main>
   <div class="card">
-    <h3>Kehadiran Ke Bilik Bimbingan & Kaunseling</h3>
+    <h3>Kehadiran Murid</h3>
 
-    <input id="nama" placeholder="Nama">
+    <div class="field">
+      <i class="fa-solid fa-user"></i>
+      <input id="nama" placeholder="Nama">
+    </div>
 
-    <select id="tingkatan" onchange="updateKelas()">
-      <option value="">-- Pilih Tingkatan --</option>
-      <option value="1">Tingkatan 1</option>
-      <option value="2">Tingkatan 2</option>
-      <option value="3">Tingkatan 3</option>
-      <option value="4">Tingkatan 4</option>
-      <option value="5">Tingkatan 5</option>
-    </select>
+    <div class="field">
+      <i class="fa-solid fa-layer-group"></i>
+      <select id="tingkatan" onchange="updateKelas()">
+        <option value="">Pilih Tingkatan</option>
+        <option value="1">Tingkatan 1</option>
+        <option value="2">Tingkatan 2</option>
+        <option value="3">Tingkatan 3</option>
+        <option value="4">Tingkatan 4</option>
+        <option value="5">Tingkatan 5</option>
+      </select>
+    </div>
 
-    <select id="kelas">
-      <option value="">-- Pilih Kelas --</option>
-    </select>
+    <div class="field">
+      <i class="fa-solid fa-chalkboard-user"></i>
+      <select id="kelas">
+        <option value="">Pilih Kelas</option>
+      </select>
+    </div>
 
-    <select id="tujuan">
-      <option value="">-- Pilih Tujuan --</option>
-      <option value="Kaunseling Akademik">Kaunseling Akademik</option>
-      <option value="Kaunseling Peribadi">Kaunseling Peribadi</option>
-      <option value="Isu Sosial">Isu Sosial</option>
-      <option value="Lain-lain">Lain-lain</option>
-    </select>
+    <div class="field">
+      <i class="fa-solid fa-bullseye"></i>
+      <select id="tujuan">
+        <option value="">Pilih Tujuan</option>
+        <option>Kaunseling Akademik</option>
+        <option>Kaunseling Peribadi</option>
+        <option>Isu Sosial</option>
+        <option>Lain-lain</option>
+      </select>
+    </div>
 
     <button onclick="hantar()">Hantar</button>
   </div>
@@ -194,27 +263,45 @@ const kelasData={
 };
 
 function updateKelas(){
-  kelas.innerHTML="<option value=''>-- Pilih Kelas --</option>";
-  (kelasData[tingkatan.value]||[]).forEach(k=>{
-    kelas.innerHTML+=`<option>${k}</option>`;
+  const ting = document.getElementById("tingkatan").value;
+  const kelasSelect = document.getElementById("kelas");
+  kelasSelect.innerHTML="<option value=''>Pilih Kelas</option>";
+  (kelasData[ting]||[]).forEach(k=>{
+    kelasSelect.innerHTML+=`<option>${k}</option>`;
   });
 }
 
 function showPopup(msg){
-  popup.style.display="block";
-  popupMsg.innerText=msg;
+  document.getElementById("popup-msg").innerText = msg;
+  document.getElementById("popup").style.display="block";
 }
-function closePopup(){ popup.style.display="none"; }
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
 
 function hantar(){
-  const data={nama:nama.value,tingkatan:tingkatan.value,kelas:kelas.value,tujuan:tujuan.value};
-  if(!data.nama||!data.tingkatan||!data.kelas||!data.tujuan){
+  const data={
+    nama:document.getElementById("nama").value,
+    tingkatan:document.getElementById("tingkatan").value,
+    kelas:document.getElementById("kelas").value,
+    tujuan:document.getElementById("tujuan").value
+  };
+  if(!data.nama || !data.tingkatan || !data.kelas || !data.tujuan){
     showPopup("Sila lengkapkan semua medan.");
     return;
   }
-  fetch(API_URL,{method:"POST",body:JSON.stringify(data)})
-  .then(()=>showPopup("Kehadiran berjaya direkod."))
-  .catch(()=>showPopup("Ralat. Cuba lagi."));
+  fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify(data)
+  })
+  .then(()=> {
+    showPopup("Kehadiran berjaya direkod.");
+    document.getElementById("nama").value="";
+    document.getElementById("tingkatan").value="";
+    document.getElementById("kelas").innerHTML="<option value=''>Pilih Kelas</option>";
+    document.getElementById("tujuan").value="";
+  })
+  .catch(()=> showPopup("Ralat. Cuba lagi."));
 }
 </script>
 
