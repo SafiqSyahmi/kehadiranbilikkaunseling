@@ -37,8 +37,8 @@ header{
   display:flex;
   align-items:center;
 }
-header img{
-  height:60px;
+.header-left img{
+  height:80px;
   margin-right:10px;
 }
 .header-text{
@@ -191,8 +191,8 @@ button:active{
   <div class="header-left">
     <img src="UBK.png" alt="Logo Kiri">
     <div class="header-text">
-      <div class="title">Unit Bimbingan & Kaunseling</div>
-      <div class="subtitle">Sistem Kehadiran Murid</div>
+      <div class="title">Unit Bimbingan & Kaunseling SMK Jerai</div>
+      <div class="subtitle">MyVisit</div>
     </div>
   </div>
   <div class="header-right">
@@ -212,7 +212,7 @@ button:active{
     <div class="field">
       <i class="fa-solid fa-layer-group"></i>
       <select id="tingkatan" onchange="updateKelas()">
-        <option value="">Pilih Tingkatan</option>
+        <option value="">-- Pilih Tingkatan --</option>
         <option value="1">Tingkatan 1</option>
         <option value="2">Tingkatan 2</option>
         <option value="3">Tingkatan 3</option>
@@ -224,18 +224,21 @@ button:active{
     <div class="field">
       <i class="fa-solid fa-chalkboard-user"></i>
       <select id="kelas">
-        <option value="">Pilih Kelas</option>
+        <option value="">-- Pilih Kelas --</option>
       </select>
     </div>
 
     <div class="field">
       <i class="fa-solid fa-bullseye"></i>
       <select id="tujuan">
-        <option value="">Pilih Tujuan</option>
-        <option>Kaunseling Akademik</option>
-        <option>Kaunseling Peribadi</option>
-        <option>Isu Sosial</option>
-        <option>Lain-lain</option>
+        <option value="">-- Pilih Tujuan --</option>
+        <option>Bimbingan Akademik</option>
+        <option>Sokongan Emosi</option>
+        <option>Pencegahan & Intervensi</option>
+        <option>Bimbingan Kerjaya</option>
+        <option>Kaunseling Individu</option>
+        <option>Kaunseling Kelompok</option>
+	<option>Lain-lain</option>
       </select>
     </div>
 
