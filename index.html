@@ -134,7 +134,30 @@ button:hover{
 button:active{
   transform:scale(.98);
 }
+.spinner{
+  width:46px;
+  height:46px;
+  border:5px solid #e5e7eb;
+  border-top:5px solid #2563eb;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+.loadingText{
+  margin-top:12px;
+  color:#fff;
+  font-size:14px;
+}
 
+#loadingOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  z-index:2000;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
 /* POPUP */
 #popup{
   display:none;
@@ -199,6 +222,11 @@ button:active{
     <img src="SMK Jerai.png" alt="Logo Kanan">
   </div>
 </header>
+
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loadingText">Memuat...</div>
+</div>
 
 <main>
   <div class="card">
@@ -265,6 +293,14 @@ const kelasData={
   "5":["5 Sains Akaun","5 Stem C","5 Kemanusiaan 1","5 Kemanusiaan 2","5 Kemanusiaan 3","5 Kemanusiaan 4"]
 };
 
+function showLoading(){
+  document.getElementById("loadingOverlay").style.display="flex";
+}
+
+function hideLoading(){
+  document.getElementById("loadingOverlay").style.display="none";
+}
+
 function updateKelas(){
   const ting = document.getElementById("tingkatan").value;
   const kelasSelect = document.getElementById("kelas");
@@ -297,7 +333,9 @@ function hantar(){
     method:"POST",
     body: JSON.stringify(data)
   })
+  showLoading();
   .then(()=> {
+	hideLoading();
     showPopup("Kehadiran berjaya direkod.");
     document.getElementById("nama").value="";
     document.getElementById("tingkatan").value="";
